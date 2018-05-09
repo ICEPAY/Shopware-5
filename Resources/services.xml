@@ -8,10 +8,10 @@
             <argument type="service" id="shopware.plugin.config_reader" />
             <argument type="service" id="models" />
             <argument type="service" id="shopware.plugin_payment_installer" />
+            <argument type="service" id="icepay.api_client" />
         </service>
 
         <service id="icepay.icepay_service" class="Icepay\Components\IcepayService">
-            <!--<argument type="service" id="service_container" />-->
             <argument type="service" id="shopware.plugin.config_reader" />
         </service>
 
@@ -24,6 +24,8 @@
         <service id="icepay.subscriber.payment" class="Icepay\Subscriber\Payment">
             <tag name="shopware.event_subscriber" />
         </service>
+
+        <service id="icepay.api_client" class="Icepay\API\Client"></service>
 
     </services>
 </container>

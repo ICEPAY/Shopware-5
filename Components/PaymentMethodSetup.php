@@ -12,6 +12,7 @@ use Icepay\Models\RawData;
 use Shopware\Components\Plugin\ConfigReader;
 use Shopware\Components\Plugin\PaymentInstaller;
 use Shopware\Models\Shop\Shop;
+use Icepay\API\Client;
 
 class PaymentMethodSetup
 {
@@ -47,6 +48,12 @@ class PaymentMethodSetup
     private $paymentMethodProvider;
 
     /**
+     *
+     * @var Icepay\API\Client
+     */
+    private $api;
+
+    /**
      * @var Icepay
      */
     private $plugin;
@@ -56,14 +63,13 @@ class PaymentMethodSetup
         ConfigReader $configReader,
         ModelManager $modelManager,
         PaymentInstaller $paymentInstaller,
-        \Icepay\API\Client $api
+        Client $api
     ) {
         $this->container = $container;
         $this->configReader = $configReader;
         $this->modelManager = $modelManager;
         $this->paymentInstaller = $paymentInstaller;
-//        $this->plugin = Shopware()->Plugins()->Backend()->Icepay();
-//        $this->apiClient = new \Icepay\API\Client();
+        $this->api = $api;
         $pluginManager = $this->container->get('shopware_plugininstaller.plugin_manager');
         $this->plugin = $pluginManager->getPluginByName('Icepay');
     }
@@ -130,7 +136,7 @@ class PaymentMethodSetup
 
     private function getIcepayPaymentMethods($merchantId, $secretCode)
     {
-        $icepay = new \Icepay\API\Client();
+        $icepay = $this->api;
         $icepay->setApiSecret($secretCode);
         $icepay->setApiKey($merchantId);
         $icepay->setCompletedURL('...');
