@@ -4,8 +4,9 @@ use Icepay\Components\IcepayPayment\PaymentResponse;
 use Icepay\Components\IcepayPayment\IcepayPaymentService;
 use Shopware\Components\Random;
 use Shopware\Models\Order\Status;
+use Shopware\Components\CSRFWhitelistAware;
 
-class Shopware_Controllers_Frontend_Icepay extends Shopware_Controllers_Frontend_Payment
+class Shopware_Controllers_Frontend_Icepay extends Shopware_Controllers_Frontend_Payment  implements CSRFWhitelistAware
 {
     const PAYMENTSTATUSPAID = 12;
     const PAYMENTSTATUSOPEN = 17;
